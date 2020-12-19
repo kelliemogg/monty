@@ -54,5 +54,12 @@ stack_t *push_stack(stack_t **head, const int n);
 void free_stack(stack_t *head);
 stack_t *add_dnodeint_end(stack_t **head, const int n);
 int opcode_finder(char **argv);
+int opcode_loop(char **argv);
+int **tokenize(char *line);
+void pushit(stack_t **stack, unsigned int line_number);
+void pallit(stack_t **stack, unsigned int line_number);
+void pintit(stack_t **stack, unsigned int line_number);
+void popit(stack_t **stack, unsigned int line_number);
+void swapit(stack_t **stack, unsigned int line_number);
 
 #endif /*MONTY_H*/

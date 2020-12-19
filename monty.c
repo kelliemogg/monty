@@ -10,6 +10,11 @@
 
 int main(int argc, char **argv)
 {
+	if (argc < 1)
+	{
+		fprintf("USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
 	opcode_loop(argc, argv);
 	return (0);
 }
@@ -22,20 +27,23 @@ int main(int argc, char **argv)
  * Return: 0
  */
 
-int opcode_loop(int argc, char **argv)
+int opcode_loop(char **argv)
 {
-	int line_number = 0;
-	int userinput;
-	(void) argc;
+	int line_number = 0, userinput, characters;
+	char *linebuf;
+	size_t buffsize;
+	FILE *fp = fopen(argv[1], 0_RDONLY);
 
-	while (1)
+	if(!fp)
 	{
-		fopen(argv[1], 0_RDONLY);
+		fprintf("Error: Can't open file %s\n", fp);
+		exit(EXIT_FAILURE);
+	}
+	characters = getline(&linebuff, &buffsize, fp);
+	while (characters >= 0)
+	{
 		line_number++;
-/* was get line but needs to read line */
-		if (userinput == -1)
-			break;
-/* after we open file */		argv = tokenize(buffer);
+		argv = tokenize(buffer);
 		if (argv[0] == NULL)
 			continue;
 		if (opcode_finder(argv) == 1)
@@ -43,7 +51,9 @@ int opcode_loop(int argc, char **argv)
 			free(argv);
 			continue;
 		}
+		characters = getline(&linebuff, &buffsize, fp);
 	}
+	free(linebuff);
 	free_stack(head);
 	return (0);
 }
@@ -58,22 +68,23 @@ int opcode_loop(int argc, char **argv)
 int **tokenize(char *line)
 {
 
-	char *linebuf;
+	char *linebuff;
 
-	linebuf = strtok(line, " ");
-	if (!linebuf)
+	linebuff = strtok(line, " ");
+	if (!linebuff)
 	{
 		exit(0);
 	}
 
-	instructions->opcode = linebuf;
+	instructions->opcode = linebuff;
 
-	while (linebuf != NULL)
+	while (linebuff != NULL)
 	{
-		linebuf = strtok(NULL, " ");
-		if (!linebuf)
+		linebuff = strtok(NULL, " ");
+		if (!linebuff)
 			break;
 	}
+	free(linebuff);
 	return (n);
 }
 
@@ -93,23 +104,23 @@ int opcode_finder(char **argv)
 	int i;
 
 	instructions_t arr[] = {
-		{"push", push}
-		{"pall", pall}
-		{"pint", pint}
-		{"pop", pop}
-		{"swap", swap}
-		{"add", add}
-		{"nop", nop}
-		{"sub", sub}
-		{"div", div}
-		{"mul", mul}
-		{"mod", mod}
-		{"pchar", pchar}
-		{"pstr", pstr}
-		{"rotl", rotl}
-		{"rotr", rotr}
-		{"stack", stack}
-		{"queue", queue}
+		{"push", pushit}
+		{"pall", pallit}
+		{"pint", pintit}
+		{"pop", popit}
+		{"swap", swapit}
+		{"add", addit}
+		{"nop", nope}
+		{"sub", subit}
+		{"div", divit}
+		{"mul", mullet}
+		{"mod", modit}
+		{"pchar", pcharit}
+		{"pstr", pstrit}
+		{"rotl", rotlit}
+		{"rotr", rotrit}
+		{"stack", stackit}
+		{"queue", queueit}
 		{"\0", NULL}
 	};
 
@@ -124,5 +135,6 @@ int opcode_finder(char **argv)
 			}
 		}
 	}
-	return (0);
+	fprintf("L%d: unknown instruction %s\n", line_number, argv);
+	exit(EXIT_FAILURE)
 }
