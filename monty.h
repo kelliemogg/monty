@@ -1,5 +1,19 @@
 #ifndef MONTY_H
 #define MONTY_H
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#include <errno.h>
+#include <strings.h>
+#include <stddef.h>
+#include <dirent.h>
+#include <signal.h>
+
+extern int line_number;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -30,5 +44,15 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+
+
+size_t print_q(const stack_t *h);
+size_t stack_len(const stack_t *h);
+stack_t *add_stackstart(stack_t **head, const int n);
+stack_t *push_stack(stack_t **head, const int n);
+void free_stack(stack_t *head);
+stack_t *add_dnodeint_end(stack_t **head, const int n);
+int opcode_finder(char **argv);
 
 #endif /*MONTY_H*/
