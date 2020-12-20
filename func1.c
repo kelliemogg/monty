@@ -10,7 +10,6 @@
 
 void pushit(stack_tt **stack, unsigned int line_number)
 {
-	int n = 0;
 	stack_tt *new, *tail = *stack;
 	(void) line_number;
 
