@@ -1,4 +1,5 @@
 #include "monty.h"
+int n = 0;
 
 /**
  * main - main
@@ -11,9 +12,9 @@
 int main(int argc, char **argv)
 {
 	printf("We've done literally nothing\n");
-	if (argc < 1)
+	if (argc != 2)
 	{
-		printf("USAGE: monty file\n");
+		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 	printf("About to enter opcode loop\n");
@@ -41,7 +42,7 @@ int opcode_loop(char **argv)
 	printf("Entering opcode loop function\n");
 	if(!fp)
 	{
-		printf("Error: Can't open file %s\n", argv[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 	printf("before first getline\n");
@@ -77,7 +78,7 @@ int opcode_loop(char **argv)
 int tokenize(stack_tt **stack, char *line)
 {
 	char *linebuff = NULL, *nbuff = NULL;
-	int n = 0, b = 0;
+	int b = 0;
 
 	linebuff = strtok(line, " ");
 	if (!linebuff)

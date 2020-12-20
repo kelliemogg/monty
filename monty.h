@@ -12,7 +12,6 @@
 #include <fcntl.h>
 
 extern int n;
-extern unsigned int line_number;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
