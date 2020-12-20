@@ -11,26 +11,30 @@
 void pushit(stack_tt **stack, unsigned int line_number)
 {
 	int n = 0;
-	stack_tt *endnode;
-	stack_tt *tail;
+	stack_tt *new, *tail = *stack;
 	(void) line_number;
 
-	endnode = malloc(sizeof(stack_tt));
-	if (endnode == NULL)
+	printf("Entered push\n");
+	new = malloc(sizeof(stack_tt));
+	if (new == NULL)
 		return;
-	endnode->n = n;
 	if (*stack == NULL)
-		*stack = endnode;
-	else
 	{
-		tail = *stack;
-		while (tail->next != NULL)
-			tail = tail->next;
-		tail->next = endnode;
-		endnode->prev = tail;
-		endnode->next = NULL;
-		endnode = tail;
+		new->prev = NULL;
+		new->next = NULL;
+		new->n = n;
+		*stack = new;
+		return;
 	}
+	while (tail->next != NULL)
+		tail = tail->next;
+	new->n = n;
+	tail->next = new;
+	new->prev = tail;
+	new->next = NULL;
+/*	tail = new;
+ */	printf("pushed %d to tail\n", new->n);
+	return;
 }
 
 /**
@@ -44,10 +48,12 @@ void pallit(stack_tt **stack, unsigned int line_number)
 	stack_tt *itr;
 	(void) line_number;
 
+	printf("Before pall\n");
 	for (itr = *stack; itr != NULL; itr = itr->next)
-		;
+		printf("%d\n", itr->n);
 	for (; itr != NULL; itr = itr->prev)
 		printf("%d\n", itr->n);
+	printf("After pall\n");
 }
 
 /**
