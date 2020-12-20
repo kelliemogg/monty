@@ -1,7 +1,6 @@
 #ifndef MONTY_H
 #define MONTY_H
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,10 +9,9 @@
 #include <errno.h>
 #include <strings.h>
 #include <stddef.h>
-#include <dirent.h>
-#include <signal.h>
 
-extern int line_number;
+extern int n;
+extern unsigned int line_number;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -29,7 +27,7 @@ typedef struct stack_s
 	int n;
 	struct stack_s *prev;
 	struct stack_s *next;
-} stack_t;
+} stack_tt;
 
 /**
  * struct instruction_s - opcode and its function
@@ -42,24 +40,24 @@ typedef struct stack_s
 typedef struct instruction_s
 {
 	char *opcode;
-	void (*f)(stack_t **stack, unsigned int line_number);
-} instruction_t;
+	void (*f)(stack_tt **stack, unsigned int line_number);
+} instruction_tt;
 
 
 
-size_t print_q(const stack_t *h);
-size_t stack_len(const stack_t *h);
-stack_t *add_stackstart(stack_t **head, const int n);
-stack_t *push_stack(stack_t **head, const int n);
-void free_stack(stack_t *head);
-stack_t *add_dnodeint_end(stack_t **head, const int n);
-int opcode_finder(char **argv);
+size_t print_q(const stack_tt *h);
+size_t stack_len(const stack_tt *h);
+stack_tt *add_stackstart(stack_tt **head, const int n);
+stack_tt *push_stack(stack_tt **head, const int n);
+void free_stack(stack_tt *head);
+stack_tt *add_dnodeint_end(stack_tt **head, const int n);
+int opcode_finder(stack_tt **stack, char *linebuff);
 int opcode_loop(char **argv);
-int **tokenize(char *line);
-void pushit(stack_t **stack, unsigned int line_number);
-void pallit(stack_t **stack, unsigned int line_number);
-void pintit(stack_t **stack, unsigned int line_number);
-void popit(stack_t **stack, unsigned int line_number);
-void swapit(stack_t **stack, unsigned int line_number);
+int tokenize(stack_tt **stack, char *line);
+void pushit(stack_tt **stack, unsigned int line_number);
+void pallit(stack_tt **stack, unsigned int line_number);
+void pintit(stack_tt **stack, unsigned int line_number);
+void popit(stack_tt **stack, unsigned int line_number);
+void swapit(stack_tt **stack, unsigned int line_number);
 
 #endif /*MONTY_H*/

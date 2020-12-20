@@ -8,12 +8,12 @@
  * Return: address or NULL
  */
 
-stack_t *add_dnodeint_end(stack_t **head, const int n)
+stack_tt *add_dnodeint_end(stack_tt **head, const int n)
 {
-	stack_t *endnode;
-	stack_t *tail;
+	stack_tt *endnode;
+	stack_tt *tail;
 
-	endnode = malloc(sizeof(stack_t));
+	endnode = malloc(sizeof(stack_tt));
 	if (endnode == NULL)
 		return (NULL);
 	endnode->n = n;

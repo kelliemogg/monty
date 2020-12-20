@@ -6,7 +6,7 @@
  * Return: number of nodes
  */
 
-size_t print_q(const stack_t *h)
+size_t print_q(const stack_tt *h)
 {
 	int count;
 
@@ -24,7 +24,7 @@ size_t print_q(const stack_t *h)
  * Return: length of list
  */
 
-size_t stack_len(const stack_t *h)
+size_t stack_len(const stack_tt *h)
 {
 	int count;
 
@@ -40,11 +40,11 @@ size_t stack_len(const stack_t *h)
  * Return: pointer to node or NULL
  */
 
-stack_t *add_stackstart(stack_t **head, const int n)
+stack_tt *add_stackstart(stack_tt **head, const int n)
 {
-	stack_t *new, *tmp;
+	stack_tt *new, *tmp;
 
-	new = malloc(sizeof(stack_t));
+	new = malloc(sizeof(stack_tt));
 	if (!new)
 		return (NULL);
 	new->prev = NULL;
@@ -68,11 +68,11 @@ stack_t *add_stackstart(stack_t **head, const int n)
  * Return: pointer to node or NULL
  */
 
-stack_t *push_stack(stack_t **head, const int n)
+stack_tt *push_stack(stack_tt **head, const int n)
 {
-	stack_t *new, *node = *head;
+	stack_tt *new, *node = *head;
 
-	new = malloc(sizeof(stack_t));
+	new = malloc(sizeof(stack_tt));
 	if (!new)
 		return (NULL);
 	if (*head == NULL)
@@ -100,9 +100,9 @@ stack_t *push_stack(stack_t **head, const int n)
  * Return: null
  */
 
-void free_stack(stack_t *head)
+void free_stack(stack_tt *head)
 {
-	stack_t *tmp;
+	stack_tt *tmp;
 
 	while (head != NULL)
 	{

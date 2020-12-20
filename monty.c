@@ -12,10 +12,10 @@ int main(int argc, char **argv)
 {
 	if (argc < 1)
 	{
-		fprintf("USAGE: monty file\n");
+		printf("USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	opcode_loop(argc, argv);
+	opcode_loop(argv);
 	return (0);
 }
 
@@ -29,32 +29,28 @@ int main(int argc, char **argv)
 
 int opcode_loop(char **argv)
 {
-	int line_number = 0, userinput, characters;
-	char *linebuf;
+	stack_tt **stack;
+	unsigned int line_number = 0;
+	int characters;
+	char *linebuff;
 	size_t buffsize;
-	FILE *fp = fopen(argv[1], 0_RDONLY);
+	FILE *fp = fopen(argv[1], "r");
 
 	if(!fp)
 	{
-		fprintf("Error: Can't open file %s\n", fp);
+		printf("Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 	characters = getline(&linebuff, &buffsize, fp);
 	while (characters >= 0)
 	{
+		stack = malloc(sizeof(stack_tt));
 		line_number++;
-		argv = tokenize(buffer);
-		if (argv[0] == NULL)
-			continue;
-		if (opcode_finder(argv) == 1)
-		{
-			free(argv);
-			continue;
-		}
+		tokenize(stack, linebuff);
 		characters = getline(&linebuff, &buffsize, fp);
 	}
 	free(linebuff);
-	free_stack(head);
+/*	free_stack; */
 	return (0);
 }
 
@@ -65,30 +61,31 @@ int opcode_loop(char **argv)
  * Return: 0
  */
 
-int **tokenize(char *line)
+int tokenize(stack_tt **stack, char *line)
 {
-
-	char *linebuff;
+	int n = 0;
+	char *linebuff, *nbuff;
 
 	linebuff = strtok(line, " ");
 	if (!linebuff)
 	{
 		exit(0);
 	}
-
-	instructions->opcode = linebuff;
-
-	while (linebuff != NULL)
+	while (nbuff != NULL)
 	{
-		linebuff = strtok(NULL, " ");
-		if (!linebuff)
+		nbuff = strtok(NULL, " ");
+		if (!nbuff)
 			break;
+		else
+		{
+			n = atoi(nbuff);
+			opcode_finder(stack, linebuff);
+		}
 	}
+	free(nbuff);
 	free(linebuff);
 	return (n);
 }
-
-
 
 
 /**
@@ -99,42 +96,43 @@ int **tokenize(char *line)
  */
 
 
-int opcode_finder(char **argv)
+int opcode_finder(stack_tt **stack, char *linebuff)
 {
+	unsigned int line_number = 1;
 	int i;
 
-	instructions_t arr[] = {
-		{"push", pushit}
-		{"pall", pallit}
-		{"pint", pintit}
-		{"pop", popit}
-		{"swap", swapit}
-		{"add", addit}
-		{"nop", nope}
-		{"sub", subit}
-		{"div", divit}
-		{"mul", mullet}
-		{"mod", modit}
-		{"pchar", pcharit}
-		{"pstr", pstrit}
-		{"rotl", rotlit}
-		{"rotr", rotrit}
-		{"stack", stackit}
-		{"queue", queueit}
+	instruction_tt arr[] = {
+		{"push", pushit},
+		{"pall", pallit},
+		{"pint", pintit},
+		{"pop", popit},
+		{"swap", swapit},
+/*		{"add", addit},
+		{"nop", nope},
+		{"sub", subit},
+		{"div", divit},
+		{"mul", mullet},
+		{"mod", modit},
+		{"pchar", pcharit},
+		{"pstr", pstrit},
+		{"rotl", rotlit},
+		{"rotr", rotrit},
+		{"stack", stackit},
+		{"queue", queueit}, */
 		{"\0", NULL}
 	};
 
-	if (argv != NULL)
+	if (linebuff != NULL)
 	{
-		for (i = 0; arr[i].func; i++)
+		for (i = 0; arr[i].f; i++)
 		{
-			if (strcmp(instructions->opcode, arr[i].argv) == 0)
+			if (strcmp(linebuff, arr[i].opcode) == 0)
 			{
-				arr[i].func();
+				arr[i].f(stack, line_number);
 				return (1);
 			}
 		}
 	}
-	fprintf("L%d: unknown instruction %s\n", line_number, argv);
-	exit(EXIT_FAILURE)
+	printf("L%d: unknown instruction %s\n", line_number, linebuff);
+	exit(EXIT_FAILURE);
 }
