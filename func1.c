@@ -13,7 +13,6 @@ void pushit(stack_tt **stack, unsigned int line_number)
 	stack_tt *new, *tail = *stack;
 	(void) line_number;
 
-	printf("Entered push\n");
 	new = malloc(sizeof(stack_tt));
 	if (new == NULL)
 		return;
@@ -31,8 +30,7 @@ void pushit(stack_tt **stack, unsigned int line_number)
 	tail->next = new;
 	new->prev = tail;
 	new->next = NULL;
-/*	tail = new;
- */	printf("pushed %d to tail\n", new->n);
+/*	tail = new; */
 	return;
 }
 
@@ -44,15 +42,17 @@ void pushit(stack_tt **stack, unsigned int line_number)
  */
 void pallit(stack_tt **stack, unsigned int line_number)
 {
+	int i = 0;
 	stack_tt *itr;
 	(void) line_number;
 
-	printf("Before pall\n");
-	for (itr = *stack; itr != NULL; itr = itr->next)
+	if (*stack == NULL)
+		return;
+	for (itr = *stack; itr->next != NULL; itr = itr->next)
+		i++;
+	i++;
+	for (; i != 0; itr = itr->prev, i--)
 		printf("%d\n", itr->n);
-	for (; itr != NULL; itr = itr->prev)
-		printf("%d\n", itr->n);
-	printf("After pall\n");
 }
 
 /**
@@ -66,7 +66,7 @@ void pintit(stack_tt **stack, unsigned int line_number)
 	stack_tt *itr;
 	(void) line_number;
 
-        for (itr = *stack; itr != NULL; itr = itr->next)
+        for (itr = *stack; itr->next != NULL; itr = itr->next)
 		;
 	printf("%d\n", itr->n);
 }
@@ -81,12 +81,19 @@ void popit(stack_tt **stack, unsigned int line_number)
 {
 	stack_tt *itr, *tmp;
 
+	itr = *stack;
 	if (*stack == NULL)
 	{
-		printf("L%d: can't pop an empty stack\n", line_number);
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-        for (itr = *stack; itr != NULL; itr = itr->next)
+	if (itr->next == NULL)
+	{
+		free(itr);
+		*stack = NULL;
+		return;
+	}
+        for (itr = *stack; itr->next != NULL; itr = itr->next)
                 ;
 	tmp = itr->prev;
 	free(itr);
@@ -102,20 +109,20 @@ void popit(stack_tt **stack, unsigned int line_number)
 
 void swapit(stack_tt **stack, unsigned int line_number)
 {
-	stack_tt *itr;
+	stack_tt *itr, *prev;
 	int holdt, holdp;
 	int len;
 
-	for (len = 1, itr = *stack; itr != NULL; len++, itr = itr->next)
+	for (len = 1, itr = *stack; itr->next != NULL; len++, itr = itr->next)
                 ;
 	if (len < 2)
 	{
-		printf("L%d: can't swap, stack too short\n", line_number);
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 	holdt = itr->n;
-	itr = itr->prev;
-	holdp = itr->n;
-	itr->n = holdt;
+	prev = itr->prev;
+	holdp = prev->n;
 	itr->n = holdp;
+	prev->n = holdt;
 }

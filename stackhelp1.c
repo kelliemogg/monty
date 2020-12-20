@@ -12,7 +12,6 @@ size_t print_q(const stack_tt *h)
 
 	for (count = 0; h != NULL; count++)
 	{
-		printf("%d\n", h->n);
 		h = h->next;
 	}
 	return (count);
