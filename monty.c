@@ -77,7 +77,7 @@ int opcode_loop(char **argv)
 int tokenize(stack_tt **stack, char *line)
 {
 	char *linebuff = NULL, *nbuff = NULL;
-	int n = 0;
+	int n = 0, b = 0;
 
 	linebuff = strtok(line, " ");
 	if (!linebuff)
@@ -94,10 +94,10 @@ int tokenize(stack_tt **stack, char *line)
 			printf("nbuff set as %s\n", nbuff);
 			n = atoi(nbuff);
 			printf("n set as %d\n", n);
-			opcode_finder(stack, linebuff);
+			b = opcode_finder(stack, linebuff);
 		}
-		else
-			opcode_finder(stack, linebuff);
+		else if (b != 1)
+			b = opcode_finder(stack, linebuff);
 	}
 	printf("before token frees\n");
 	if (nbuff)

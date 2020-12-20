@@ -11,28 +11,29 @@
 void pushit(stack_tt **stack, unsigned int line_number)
 {
 	int n = 0;
-	stack_tt *endnode;
-	stack_tt *tail;
+	stack_tt *new, *tail = *stack;
 	(void) line_number;
 
 	printf("Entered push\n");
-	endnode = malloc(sizeof(stack_tt));
-	if (endnode == NULL)
+	new = malloc(sizeof(stack_tt));
+	if (new == NULL)
 		return;
-	endnode->n = n;
 	if (*stack == NULL)
-		*stack = endnode;
-	else
 	{
-		tail = *stack;
-		while (tail->next != NULL)
-			tail = tail->next;
-		tail->next = endnode;
-		endnode->prev = tail;
-		endnode->next = NULL;
-		endnode = tail;
+		new->prev = NULL;
+		new->next = NULL;
+		new->n = n;
+		*stack = new;
+		return;
 	}
-	printf("pushed %d to tail\n", endnode->n);
+	while (tail->next != NULL)
+		tail = tail->next;
+	new->n = n;
+	tail->next = new;
+	new->prev = tail;
+	new->next = NULL;
+/*	tail = new;
+ */	printf("pushed %d to tail\n", new->n);
 	return;
 }
 
