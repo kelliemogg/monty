@@ -9,6 +9,7 @@
 #include <errno.h>
 #include <strings.h>
 #include <stddef.h>
+#include <fcntl.h>
 
 extern int n;
 extern unsigned int line_number;
@@ -49,7 +50,7 @@ size_t print_q(const stack_tt *h);
 size_t stack_len(const stack_tt *h);
 stack_tt *add_stackstart(stack_tt **head, const int n);
 stack_tt *push_stack(stack_tt **head, const int n);
-void free_stack(stack_tt *head);
+void free_stack(stack_tt *stack);
 stack_tt *add_dnodeint_end(stack_tt **head, const int n);
 int opcode_finder(stack_tt **stack, char *linebuff);
 int opcode_loop(char **argv);

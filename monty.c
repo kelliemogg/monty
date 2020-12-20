@@ -10,11 +10,13 @@
 
 int main(int argc, char **argv)
 {
+	printf("We've done literally nothing\n");
 	if (argc < 1)
 	{
 		printf("USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
+	printf("About to enter opcode loop\n");
 	opcode_loop(argv);
 	return (0);
 }
@@ -29,28 +31,39 @@ int main(int argc, char **argv)
 
 int opcode_loop(char **argv)
 {
-	stack_tt **stack;
+	stack_tt *stack = NULL;
 	unsigned int line_number = 0;
-	int characters;
-	char *linebuff;
+	int characters, i;
+	char *linebuff = NULL;
 	size_t buffsize;
 	FILE *fp = fopen(argv[1], "r");
 
+	printf("Entering opcode loop function\n");
 	if(!fp)
 	{
 		printf("Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
+	printf("before first getline\n");
 	characters = getline(&linebuff, &buffsize, fp);
+	printf("Before getline while loop\n");
 	while (characters >= 0)
 	{
-		stack = malloc(sizeof(stack_tt));
+		for (i = 0; linebuff[i] != '\0'; i++)
+		{
+			if (linebuff[i] == '\n' && linebuff[i + 1] == '\0')
+				linebuff[i] = '\0';
+		}
+		printf("linebuff is [%s]\n", linebuff);
 		line_number++;
-		tokenize(stack, linebuff);
+		tokenize(&stack, linebuff);
+		linebuff = NULL;
 		characters = getline(&linebuff, &buffsize, fp);
 	}
+	fclose(fp);
 	free(linebuff);
-/*	free_stack; */
+	printf("after getline while loop\n");
+	free_stack(stack);
 	return (0);
 }
 
@@ -63,27 +76,35 @@ int opcode_loop(char **argv)
 
 int tokenize(stack_tt **stack, char *line)
 {
+	char *linebuff = NULL, *nbuff = NULL;
 	int n = 0;
-	char *linebuff, *nbuff;
 
 	linebuff = strtok(line, " ");
 	if (!linebuff)
 	{
 		exit(0);
 	}
+	printf("linebuff set as [%s]\n", linebuff);
+	nbuff = linebuff;
 	while (nbuff != NULL)
 	{
 		nbuff = strtok(NULL, " ");
-		if (!nbuff)
-			break;
-		else
+		if (nbuff != NULL)
 		{
+			printf("nbuff set as %s\n", nbuff);
 			n = atoi(nbuff);
+			printf("n set as %d\n", n);
 			opcode_finder(stack, linebuff);
 		}
+		else
+			opcode_finder(stack, linebuff);
 	}
-	free(nbuff);
-	free(linebuff);
+	printf("before token frees\n");
+	if (nbuff)
+		free(nbuff);
+	if (linebuff)
+		free(linebuff);
+	printf("after token frees\n");
 	return (n);
 }
 
@@ -122,12 +143,15 @@ int opcode_finder(stack_tt **stack, char *linebuff)
 		{"\0", NULL}
 	};
 
+	printf("Entered opcodes with linebuff [%s]\n", linebuff);
 	if (linebuff != NULL)
 	{
 		for (i = 0; arr[i].f; i++)
 		{
+			printf("arr[i].f is %s\n", arr[i].opcode);
 			if (strcmp(linebuff, arr[i].opcode) == 0)
 			{
+				printf("found a match\n");
 				arr[i].f(stack, line_number);
 				return (1);
 			}

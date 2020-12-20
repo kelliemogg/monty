@@ -100,14 +100,19 @@ stack_tt *push_stack(stack_tt **head, const int n)
  * Return: null
  */
 
-void free_stack(stack_tt *head)
+void free_stack(stack_tt *stack)
 {
-	stack_tt *tmp;
+	stack_tt *tmp = NULL;
 
-	while (head != NULL)
+	if (stack == NULL)
+		return;
+	while (stack != NULL)
 	{
-		tmp = head;
-		head = head->next;
+		tmp = stack;
+		stack = stack->next;
 		free(tmp);
+		tmp = tmp->next;
 	}
+	free(stack);
+	stack = NULL;
 }
