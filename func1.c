@@ -1,21 +1,23 @@
 #include "monty.h"
 
 /**
- *
- *
- *
- *
- *
+ * pushit - push a node
+ * description: push it real good
+ * @stack: stackity stack
+ * @line_number: don't come back
+ * Return: void
  */
 
-void pushit(stack_t **stack, unsigned int line_number)
+void pushit(stack_tt **stack, unsigned int line_number)
 {
-	stack_t *endnode;
-	stack_t *tail;
+	int n = 0;
+	stack_tt *endnode;
+	stack_tt *tail;
+	(void) line_number;
 
-	endnode = malloc(sizeof(stack_t));
+	endnode = malloc(sizeof(stack_tt));
 	if (endnode == NULL)
-		return (NULL);
+		return;
 	endnode->n = n;
 	if (*stack == NULL)
 		*stack = endnode;
@@ -29,7 +31,6 @@ void pushit(stack_t **stack, unsigned int line_number)
 		endnode->next = NULL;
 		endnode = tail;
 	}
-	return (1);
 }
 
 /**
@@ -38,9 +39,10 @@ void pushit(stack_t **stack, unsigned int line_number)
  *
  *
  */
-void pallit(stack_t **stack, unsigned int line_number)
+void pallit(stack_tt **stack, unsigned int line_number)
 {
-	stack_t *itr;
+	stack_tt *itr;
+	(void) line_number;
 
 	for (itr = *stack; itr != NULL; itr = itr->next)
 		;
@@ -54,9 +56,10 @@ void pallit(stack_t **stack, unsigned int line_number)
  *
  *
  */
-void pintit(stack_t **stack, unsigned int line_number)
+void pintit(stack_tt **stack, unsigned int line_number)
 {
-	stack_t *itr;
+	stack_tt *itr;
+	(void) line_number;
 
         for (itr = *stack; itr != NULL; itr = itr->next)
 		;
@@ -69,21 +72,20 @@ void pintit(stack_t **stack, unsigned int line_number)
  *
  */
 
-void popit(stack_t **stack, unsigned int line_number)
+void popit(stack_tt **stack, unsigned int line_number)
 {
-	stack_t *itr, *tmp;
+	stack_tt *itr, *tmp;
 
 	if (*stack == NULL)
 	{
-		fprintf("L%d: can't pop an empty stack\n", line_number);
+		printf("L%d: can't pop an empty stack\n", line_number);
 		exit(EXIT_FAILURE);
 	}
         for (itr = *stack; itr != NULL; itr = itr->next)
                 ;
-	tmp = itr>prev;
+	tmp = itr->prev;
 	free(itr);
 	tmp->next = NULL;
-	Tail = tmp;
 }
 
 /**
@@ -93,16 +95,17 @@ void popit(stack_t **stack, unsigned int line_number)
  *
  */
 
-void swapit(stack_t **stack, unsigned int line_number)
+void swapit(stack_tt **stack, unsigned int line_number)
 {
-	stack_t *itr, *holdt, *holdp;
+	stack_tt *itr;
+	int holdt, holdp;
 	int len;
 
 	for (len = 1, itr = *stack; itr != NULL; len++, itr = itr->next)
                 ;
 	if (len < 2)
 	{
-		fprintf("L%d: can't swap, stack too short\n", line_number);
+		printf("L%d: can't swap, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 	holdt = itr->n;
