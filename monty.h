@@ -61,5 +61,10 @@ void popit(stack_tt **stack, unsigned int line_number);
 void swapit(stack_tt **stack, unsigned int line_number);
 void addit(stack_tt **stack, unsigned int line_number);
 void nope(stack_tt **stack, unsigned int line_number);
+void subit(stack_tt **stack, unsigned int line_number);
+void mullet(stack_tt **stack, unsigned int line_number);
+void modit(stack_tt **stack, unsigned int line_number);
+void divit(stack_tt **stack, unsigned int line_number);
+
 
 #endif /*MONTY_H*/
