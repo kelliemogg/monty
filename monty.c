@@ -32,7 +32,7 @@ int opcode_loop(char **argv)
 {
 	stack_tt *stack = NULL;
 	unsigned int line_number = 0;
-	int characters, i;
+	int characters, i, tok;
 	char *linebuff = NULL;
 	size_t buffsize;
 	FILE *fp = fopen(argv[1], "r");
@@ -51,7 +51,9 @@ int opcode_loop(char **argv)
 				linebuff[i] = '\0';
 		}
 		line_number++;
-		tokenize(&stack, linebuff);
+		tok = tokenize(&stack, linebuff, line_number);
+		if (tok == -1)
+			break;
 		if (linebuff != NULL)
 			free(linebuff);
 		linebuff = NULL;
@@ -71,7 +73,7 @@ int opcode_loop(char **argv)
  * Return: 0
  */
 
-int tokenize(stack_tt **stack, char *line)
+int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 {
 	char *linebuff = NULL, *nbuff = NULL;
 	int b = 0;
@@ -79,27 +81,25 @@ int tokenize(stack_tt **stack, char *line)
 	linebuff = strtok(line, " ");
 	if (!linebuff)
 	{
-		printf("Linebuff is Null\n");
 		return(0);
 	}
 	nbuff = linebuff;
-/*	while (nbuff != NULL)
+	nbuff = strtok(NULL, " ");
+	if (nbuff != NULL)
 	{
-*/		nbuff = strtok(NULL, " ");
-		if (nbuff != NULL)
+		n = atoi(nbuff);
+		b = opcode_finder(stack, linebuff, line_number);
+	}
+	else if (b != 1)
+	{
+		if (strcmp(linebuff, "push") == 0)
 		{
-			n = atoi(nbuff);
-			b = opcode_finder(stack, linebuff);
+			fprintf(stderr,"L%d: unknown instruction %s\n", line_number, linebuff);
+			return(-1);
 		}
-		else if (b != 1)
-			b = opcode_finder(stack, linebuff);
-/*	}
- */	printf("%s = [nbuff] and %s = [linebuff]\n", nbuff, linebuff);
-/*	if (nbuff)
-		free(nbuff);
-	if (linebuff)
-		free(linebuff);
-*/	return (n);
+			b = opcode_finder(stack, linebuff, line_number);
+	}
+	return (n);
 }
 
 
@@ -111,9 +111,8 @@ int tokenize(stack_tt **stack, char *line)
  */
 
 
-int opcode_finder(stack_tt **stack, char *linebuff)
+int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 {
-	unsigned int line_number = 1;
 	int i;
 
 	instruction_tt arr[] = {
@@ -122,9 +121,9 @@ int opcode_finder(stack_tt **stack, char *linebuff)
 		{"pint", pintit},
 		{"pop", popit},
 		{"swap", swapit},
-/*		{"add", addit},
+		{"add", addit},
 		{"nop", nope},
-		{"sub", subit},
+/*		{"sub", subit},
 		{"div", divit},
 		{"mul", mullet},
 		{"mod", modit},
