@@ -1,10 +1,10 @@
 #include "monty.h"
 
 /**
- * pushit - push a node
- * description: push it real good
- * @stack: stackity stack
- * @line_number: don't clap back
+ * pushit - push element to the stack
+ * description: adds element to the stack
+ * @stack: dbl ptr to a stack
+ * @line_number: ln count for error
  * Return: void
  */
 
@@ -30,14 +30,15 @@ void pushit(stack_tt **stack, unsigned int line_number)
 	tail->next = new;
 	new->prev = tail;
 	new->next = NULL;
-	return;
+	return (void);
 }
 
 /**
- * pallit - prints linked list backwards
- *
- *
- *
+ * pallit - print all
+ * decription: prints linked list backwards
+ * @stack: dbl ptr to stack
+ * @line_number: ln count for errors
+ * Return: void
  */
 void pallit(stack_tt **stack, unsigned int line_number)
 {
@@ -55,25 +56,28 @@ void pallit(stack_tt **stack, unsigned int line_number)
 }
 
 /**
- * pintit - prints tail of linked list
- *
- *
- *
+ * pintit - prints a value
+ * description: prints value at top of stack
+ * @stack: dbl ptr to stack
+ * @line_number: ln count for errors
+ * Return: void
  */
 void pintit(stack_tt **stack, unsigned int line_number)
 {
 	stack_tt *itr;
 	(void) line_number;
 
-        for (itr = *stack; itr->next != NULL; itr = itr->next)
+	for (itr = *stack; itr->next != NULL; itr = itr->next)
 		;
 	printf("%d\n", itr->n);
 }
 
 /**
- * popit - Removes node at end
- *
- *
+ * popit - pops an element off the stack
+ * description: removes top element
+ * @stack: dbl ptr to stack
+ * @line_number: ln count for errors
+ * Return: void
  */
 
 void popit(stack_tt **stack, unsigned int line_number)
@@ -92,18 +96,19 @@ void popit(stack_tt **stack, unsigned int line_number)
 		*stack = NULL;
 		return;
 	}
-        for (itr = *stack; itr->next != NULL; itr = itr->next)
-                ;
+	for (itr = *stack; itr->next != NULL; itr = itr->next)
+		;
 	tmp = itr->prev;
 	free(itr);
 	tmp->next = NULL;
 }
 
 /**
- * swapit - swaps top two in stack
- *
- *
- *
+ * swapit - swaps elements
+ * description: swaps top two elements in stack
+ * @stack: dbl ptr to stack
+ * @line_number: ln count for errors
+ * Return: void
  */
 
 void swapit(stack_tt **stack, unsigned int line_number)
@@ -113,7 +118,7 @@ void swapit(stack_tt **stack, unsigned int line_number)
 	int len;
 
 	for (len = 1, itr = *stack; itr->next != NULL; len++, itr = itr->next)
-                ;
+		;
 	if (len < 2)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
