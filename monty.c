@@ -101,12 +101,14 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 	if (nbuff != NULL)
 	{
 		for (i = 0; nbuff[i] != '\0'; i++)
+		{
 			if (nbuff[i] < 48 || nbuff[i] > 57)
 			{
 				first->error_code = -1;
 				fprintf(stderr, "L%d: usage: push integer\n", line_number);
 				return (-1);
 			}
+		}
 		first->n = atoi(nbuff);
 		b = opcode_finder(stack, linebuff, line_number);
 	}
@@ -149,6 +151,7 @@ int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 		{"div", divit},
 		{"mul", mullet},
 		{"mod", modit},
+		{"#", nope},
 		{"\0", NULL}
 	};
 
@@ -161,12 +164,12 @@ int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 				arr[i].f(stack, line_number);
 				return (1);
 			}
-/*			else if (linebuff[0] == '#')
+			else if (linebuff[0] == '#')
 			{
 				arr[11].f(stack, line_number);
 				return (1);
 			}
-*/		}
+		}
 	}
 	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, linebuff);
 	exit(EXIT_FAILURE);
