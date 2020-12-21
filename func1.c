@@ -30,7 +30,6 @@ void pushit(stack_tt **stack, unsigned int line_number)
 	tail->next = new;
 	new->prev = tail;
 	new->next = NULL;
-	return (void);
 }
 
 /**

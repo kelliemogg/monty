@@ -39,5 +39,4 @@ void nope(stack_tt **stack, unsigned int line_number)
 	(void) stack;
 	(void)line_number;
 
-	return (void);
 }
