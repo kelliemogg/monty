@@ -89,7 +89,7 @@ int opcode_loop(char **argv)
 int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 {
 	char *linebuff = NULL, *nbuff = NULL;
-	int b = 0;
+	int b = 0, i = 0;
 
 	linebuff = strtok(line, " ");
 	if (!linebuff)
@@ -100,6 +100,13 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 	nbuff = strtok(NULL, " ");
 	if (nbuff != NULL)
 	{
+		for (i = 0; nbuff[i] != '\0'; i++)
+			if (nbuff[i] < 48 || nbuff[i] > 57)
+			{
+				first->error_code = -1;
+				fprintf(stderr, "L%d: usage: push integer\n", line_number);
+				return (-1);
+			}
 		first->n = atoi(nbuff);
 		b = opcode_finder(stack, linebuff, line_number);
 	}
@@ -142,15 +149,7 @@ int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 		{"div", divit},
 		{"mul", mullet},
 		{"mod", modit},
-/**
- *
- * {"pchar", pcharit},
- *		{"pstr", pstrit},
- *		{"rotl", rotlit},
- *		{"rotr", rotrit},
- *		{"stack", stackit},
- *		{"queue", queueit},
- */
+		{"#", nope},
 		{"\0", NULL}
 	};
 
@@ -161,6 +160,11 @@ int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 			if (strcmp(linebuff, arr[i].opcode) == 0)
 			{
 				arr[i].f(stack, line_number);
+				return (1);
+			}
+			else if (linebuff[0] == '#')
+			{
+				arr[11].f(stack, line_number);
 				return (1);
 			}
 		}
