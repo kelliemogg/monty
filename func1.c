@@ -11,6 +11,7 @@
 void pushit(stack_tt **stack, unsigned int line_number)
 {
 	stack_tt *new, *tail = *stack;
+	int n = first->n;
 	(void) line_number;
 
 	new = malloc(sizeof(stack_tt));
@@ -66,6 +67,12 @@ void pintit(stack_tt **stack, unsigned int line_number)
 	stack_tt *itr;
 	(void) line_number;
 
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		first->error_code = -1;
+		return;
+	}
 	for (itr = *stack; itr->next != NULL; itr = itr->next)
 		;
 	printf("%d\n", itr->n);
@@ -87,7 +94,8 @@ void popit(stack_tt **stack, unsigned int line_number)
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
-		exit(EXIT_FAILURE);
+		first->n = -1;
+		return;
 	}
 	if (itr->next == NULL)
 	{
@@ -121,7 +129,8 @@ void swapit(stack_tt **stack, unsigned int line_number)
 	if (len < 2)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
+		first->n = -1;
+		return;
 	}
 	holdt = itr->n;
 	prev = itr->prev;

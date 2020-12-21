@@ -16,7 +16,8 @@ void addit(stack_tt **stack, unsigned int line_number)
 	if ((*stack == NULL) || (itr->next == NULL))
 	{
 		fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
+		first->n = -1;
+		return;
 	}
 	for (; itr->next != NULL; itr = itr->next)
 		;
@@ -57,7 +58,8 @@ void subit(stack_tt **stack, unsigned int line_number)
 	if ((*stack == NULL) || (itr->next == NULL))
 	{
 		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
+		first->n = -1;
+		return;
 	}
 	for (; itr->next != NULL; itr = itr->next)
 		;
@@ -83,7 +85,8 @@ void mullet(stack_tt **stack, unsigned int line_number)
 	if ((*stack == NULL) || (itr->next == NULL))
 	{
 		fprintf(stderr, "L%d: can't mul, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
+		first->n = -1;
+		return;
 	}
 	for (; itr->next != NULL; itr = itr->next)
 		;
@@ -110,7 +113,8 @@ void divit(stack_tt **stack, unsigned int line_number)
 	if ((*stack == NULL) || (itr->next == NULL))
 	{
 		fprintf(stderr, "L%d: can't div, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
+		first->n = -1;
+		return;
 	}
 	for (; itr->next != NULL; itr = itr->next)
 		;
@@ -120,7 +124,8 @@ void divit(stack_tt **stack, unsigned int line_number)
 	if (value_one == 0)
 	{
 		fprintf(stderr, "L%d: division by zero\n", line_number);
-		exit(EXIT_FAILURE);
+		first->n = -1;
+		return;
 	}
 	prev->n = value_two / value_one;
 	popit(stack, line_number);

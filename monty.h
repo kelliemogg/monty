@@ -11,7 +11,19 @@
 #include <stddef.h>
 #include <fcntl.h>
 
-extern int n;
+/**
+ * struct variables - struct to hold variables
+ * @n: value to pass to stack
+ * @error_code: checks for errors
+ *
+ */
+typedef struct variables
+{
+	int n;
+	int error_code;
+} vars;
+
+extern vars *first;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
