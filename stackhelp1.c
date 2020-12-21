@@ -95,7 +95,7 @@ stack_tt *push_stack(stack_tt **head, const int n)
 
 /**
  * free_stack - frees doubly linked list
- * @head: head of linked list
+ * @stack: dbl ptr to stack
  * Return: null
  */
 

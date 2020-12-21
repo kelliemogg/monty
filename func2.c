@@ -1,10 +1,11 @@
 #include "monty.h"
 
 /**
- *
- *
- *
- *
+ * addit - adds data
+ * description: adds the value from top two elements
+ * @stack: dbl ptr to a stack
+ * @line_number: ln count for errors
+ * Return: void
  */
 
 void addit(stack_tt **stack, unsigned int line_number)
@@ -26,10 +27,17 @@ void addit(stack_tt **stack, unsigned int line_number)
 	popit(stack, line_number);
 }
 
+/**
+ * nope - nop opcode
+ * description: doesn't do a thing
+ * @stack: dbl ptr to stack
+ * @line_number: ln count for errors
+ * Return: void
+ */
 void nope(stack_tt **stack, unsigned int line_number)
 {
 	(void) stack;
 	(void)line_number;
 
-	return;
+	return (void);
 }

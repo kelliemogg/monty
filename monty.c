@@ -1,4 +1,5 @@
 #include "monty.h"
+
 int n = 0;
 
 /**
@@ -23,7 +24,6 @@ int main(int argc, char **argv)
 /**
  * opcode_loop - interpreter
  * description: this takes input
- * @argc: argc
  * @argv: argv
  * Return: 0
  */
@@ -37,7 +37,7 @@ int opcode_loop(char **argv)
 	size_t buffsize;
 	FILE *fp = fopen(argv[1], "r");
 
-	if(!fp)
+	if (!fp)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
@@ -70,6 +70,8 @@ int opcode_loop(char **argv)
  * tokenize - tokenize
  * description: tokenize
  * @line: line
+ * @stack: dbl ptr to stack
+ * @line_number: ln count for errors
  * Return: 0
  */
 
@@ -81,7 +83,7 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 	linebuff = strtok(line, " ");
 	if (!linebuff)
 	{
-		return(0);
+		return (0);
 	}
 	nbuff = linebuff;
 	nbuff = strtok(NULL, " ");
@@ -94,8 +96,8 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 	{
 		if (strcmp(linebuff, "push") == 0)
 		{
-			fprintf(stderr,"L%d: unknown instruction %s\n", line_number, linebuff);
-			return(-1);
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, linebuff);
+			return (-1);
 		}
 			b = opcode_finder(stack, linebuff, line_number);
 	}
@@ -106,7 +108,9 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 /**
  * opcode_finder - finds proper opcode
  * description: str compares opcode for correlating func
- * @argv: arg passed as opcode
+ * @stack: dbl ptr to stack
+ * @linebuff: linebuff
+ * @line_number: ln count for errors
  * Return: 0 or 1
  */
 
@@ -123,16 +127,18 @@ int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 		{"swap", swapit},
 		{"add", addit},
 		{"nop", nope},
-/*		{"sub", subit},
-		{"div", divit},
-		{"mul", mullet},
-		{"mod", modit},
-		{"pchar", pcharit},
-		{"pstr", pstrit},
-		{"rotl", rotlit},
-		{"rotr", rotrit},
-		{"stack", stackit},
-		{"queue", queueit}, */
+/*
+ *		{"sub", subit},
+ *		{"div", divit},
+ *		{"mul", mullet},
+ *		{"mod", modit},
+ *		{"pchar", pcharit},
+ *		{"pstr", pstrit},
+ *		{"rotl", rotlit},
+ *		{"rotr", rotrit},
+ *		{"stack", stackit},
+ *		{"queue", queueit},
+ */
 		{"\0", NULL}
 	};
 
