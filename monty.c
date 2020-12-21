@@ -1,6 +1,6 @@
 #include "monty.h"
 
-int n = 0;
+vars *first;
 
 /**
  * main - main
@@ -12,6 +12,11 @@ int n = 0;
 
 int main(int argc, char **argv)
 {
+	first = malloc(sizeof(vars));
+	if (!first)
+		return (-1);
+	first->n = 0;
+	first->error_code = 0;
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
@@ -32,7 +37,7 @@ int opcode_loop(char **argv)
 {
 	stack_tt *stack = NULL;
 	unsigned int line_number = 0;
-	int characters, i, tok;
+	int characters, i, tok, err;
 	char *linebuff = NULL;
 	size_t buffsize;
 	FILE *fp = fopen(argv[1], "r");
@@ -57,12 +62,18 @@ int opcode_loop(char **argv)
 		if (linebuff != NULL)
 			free(linebuff);
 		linebuff = NULL;
+		if (first->error_code == -1)
+			break;
 		characters = getline(&linebuff, &buffsize, fp);
 	}
+	err = first->error_code;
 	fclose(fp);
 	if (linebuff != NULL)
 		free(linebuff);
 	free_stack(stack);
+	free(first);
+	if (err == -1)
+		exit(EXIT_FAILURE);
 	return (0);
 }
 
@@ -89,7 +100,7 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 	nbuff = strtok(NULL, " ");
 	if (nbuff != NULL)
 	{
-		n = atoi(nbuff);
+		first->n = atoi(nbuff);
 		b = opcode_finder(stack, linebuff, line_number);
 	}
 	else if (b != 1)
@@ -101,7 +112,7 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 		}
 			b = opcode_finder(stack, linebuff, line_number);
 	}
-	return (n);
+	return (first->n);
 }
 
 
