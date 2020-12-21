@@ -94,7 +94,7 @@ void popit(stack_tt **stack, unsigned int line_number)
 	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
-		first->n = -1;
+		first->error_code = -1;
 		return;
 	}
 	if (itr->next == NULL)
@@ -129,7 +129,7 @@ void swapit(stack_tt **stack, unsigned int line_number)
 	if (len < 2)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
-		first->n = -1;
+		first->error_code = -1;
 		return;
 	}
 	holdt = itr->n;
