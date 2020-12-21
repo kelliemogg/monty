@@ -127,11 +127,13 @@ int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 		{"swap", swapit},
 		{"add", addit},
 		{"nop", nope},
- 		{"sub", subit},
- 		{"div", divit},
+		{"sub", subit},
+		{"div", divit},
 		{"mul", mullet},
 		{"mod", modit},
-/*		{"pchar", pcharit},
+/**
+ *
+ * {"pchar", pcharit},
  *		{"pstr", pstrit},
  *		{"rotl", rotlit},
  *		{"rotr", rotrit},

@@ -64,7 +64,7 @@ void subit(stack_tt **stack, unsigned int line_number)
 	value_one = itr->n;
 	prev = itr->prev;
 	value_two = prev->n;
-	prev->n = value_one - value_two;
+	prev->n = value_two - value_one;
 	popit(stack, line_number);
 }
 
