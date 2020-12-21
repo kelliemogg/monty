@@ -4,7 +4,7 @@
  * pushit - push a node
  * description: push it real good
  * @stack: stackity stack
- * @line_number: don't come back
+ * @line_number: don't clap back
  * Return: void
  */
 
@@ -30,7 +30,6 @@ void pushit(stack_tt **stack, unsigned int line_number)
 	tail->next = new;
 	new->prev = tail;
 	new->next = NULL;
-/*	tail = new; */
 	return;
 }
 
