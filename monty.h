@@ -80,5 +80,6 @@ void divit(stack_tt **stack, unsigned int line_number);
 void pcharit(stack_tt **stack, unsigned int line_number);
 void pstrit(stack_tt **stack, unsigned int line_number);
 void rotlit(stack_tt **stack, unsigned int line_number);
+void rotrit(stack_tt **stack, unsigned int line_number);
 
 #endif /*MONTY_H*/
