@@ -35,3 +35,38 @@ void modit(stack_tt **stack, unsigned int line_number)
 	prev->n = value_two % value_one;
 	popit(stack, line_number);
 }
+
+/**
+ * pcharit - prints a value
+ * description: prints value at top of stack
+ * @stack: dbl ptr to stack
+ * @line_number: ln count for errors
+ * Return: void
+ */
+void pcharit(stack_tt **stack, unsigned int line_number)
+{
+	int n = 0;
+	stack_tt *itr;
+	(void) line_number;
+
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
+		first->error_code = -1;
+		return;
+	}
+	for (itr = *stack; itr->next != NULL; itr = itr->next)
+	;
+	if (itr->n >= 0 && itr->n <= 127)
+	{
+		n = itr->n;
+		putchar(n);
+		putchar('\n');
+	}
+	else
+	{
+		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
+		first->error_code = -1;
+		return;
+	}
+}
