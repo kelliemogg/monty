@@ -114,7 +114,7 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 	{
 		if (strcmp(linebuff, "push") == 0)
 		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, linebuff);
+			fprintf(stderr, "L%d: usage: push integer\n", line_number);
 			return (-1);
 		}
 			b = opcode_finder(stack, linebuff, line_number);
@@ -170,5 +170,6 @@ int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 		}
 	}
 	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, linebuff);
-	exit(EXIT_FAILURE);
+	first->error_code = -1;
+	return (-1);
 }
