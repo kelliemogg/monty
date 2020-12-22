@@ -102,3 +102,36 @@ void pstrit(stack_tt **stack, unsigned int line_number)
 	}
 	putchar('\n');
 }
+
+
+/**
+ * rotlit - rotates the stack to the top
+ * description: top element of the stack becomes the last one
+ * @stack: dbl ptr to a stack
+ * @line_number: ln count for error
+ * Return: void
+ */
+
+void rotlit(stack_tt **stack, unsigned int line_number)
+{
+	stack_tt *head, *tail, *newtail;
+
+	head = *stack;
+	if (*stack == NULL)
+		return;
+	for (tail = head; tail->next != NULL; tail = tail->next)
+		;
+	if (tail == head)
+		return;
+	if (tail->prev == head)
+	{
+		swapit(stack, line_number);
+		return;
+	}
+	newtail = tail->prev;
+	newtail->next = NULL;
+	tail->prev = NULL;
+	tail->next = head;
+	head->prev = tail;
+	*stack = tail;
+}
