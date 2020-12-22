@@ -91,7 +91,7 @@ int opcode_loop(char **argv)
 int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 {
 	char *linebuff = NULL, *nbuff = NULL;
-	int b = 0, i;
+	int b = 0;
 
 	linebuff = strtok(line, " ");
 	if (!linebuff)
@@ -102,14 +102,14 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 	nbuff = strtok(NULL, " ");
 	if (nbuff != NULL)
 	{
-		for (i = 0; nbuff[i] != '\0'; i++)
+/*		for (i = 0; nbuff[i] != '\0'; i++)
 			if ((nbuff[i] < 48 && nbuff[i] != 45) || nbuff[i] > 57)
 			{
 				first->error_code = -1;
 				fprintf(stderr, "L%d: usage: push integer\n", line_number);
 				first->error_code = -1;
 				return (-1);
-			}
+				}*/
 		first->n = atoi(nbuff);
 		b = opcode_finder(stack, linebuff, line_number);
 	}
