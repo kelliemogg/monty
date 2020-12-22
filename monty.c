@@ -14,7 +14,10 @@ int main(int argc, char **argv)
 {
 	first = malloc(sizeof(vars));
 	if (!first)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
 		return (-1);
+	}
 	first->n = 0;
 	first->error_code = 0;
 	if (argc != 2)
@@ -37,7 +40,7 @@ int opcode_loop(char **argv)
 {
 	stack_tt *stack = NULL;
 	unsigned int line_number = 0;
-	int characters, i, tok, err;
+	int characters, i, err;
 	char *linebuff = NULL;
 	size_t buffsize;
 	FILE *fp = fopen(argv[1], "r");
@@ -57,9 +60,7 @@ int opcode_loop(char **argv)
 				linebuff[i] = '\0';
 		}
 		line_number++;
-		tok = tokenize(&stack, linebuff, line_number);
-		if (tok == -1)
-			break;
+		tokenize(&stack, linebuff, line_number);
 		if (linebuff != NULL)
 			free(linebuff);
 		linebuff = NULL;
@@ -106,6 +107,7 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 			{
 				first->error_code = -1;
 				fprintf(stderr, "L%d: usage: push integer\n", line_number);
+				first->error_code = -1;
 				return (-1);
 			}
 		first->n = atoi(nbuff);
@@ -116,6 +118,7 @@ int tokenize(stack_tt **stack, char *line, unsigned int line_number)
 		if (strcmp(linebuff, "push") == 0)
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
+			first->error_code = -1;
 			return (-1);
 		}
 			b = opcode_finder(stack, linebuff, line_number);
