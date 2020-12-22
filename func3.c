@@ -72,8 +72,8 @@ void pcharit(stack_tt **stack, unsigned int line_number)
 }
 
 /**
- * pstrit - print all
- * decription: prints linked list backwards
+ * pstrit - print the string at the top of the stack
+ * decription: prints the ascii of an int
  * @stack: dbl ptr to stack
  * @line_number: ln count for errors
  * Return: void
@@ -85,13 +85,18 @@ void pstrit(stack_tt **stack, unsigned int line_number)
 	(void) line_number;
 
 	if (*stack == NULL)
+	{
+		putchar('\n');
 		return;
+	}
 	for (itr = *stack; itr->next != NULL; itr = itr->next)
 		i++;
 	i++;
 	for (; i != 0; itr = itr->prev, i--)
 	{
 		if (itr->n == 0)
+			break;
+		if (itr->n < 0 || itr->n > 127)
 			break;
 		putchar(itr->n);
 	}

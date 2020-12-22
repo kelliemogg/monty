@@ -128,6 +128,7 @@ void swapit(stack_tt **stack, unsigned int line_number)
 	int holdt, holdp;
 	int len;
 
+	itr = *stack;
 	for (len = 1, itr = *stack; itr->next != NULL; len++, itr = itr->next)
 		;
 	if (len < 2)
