@@ -147,6 +147,7 @@ int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 		{"mod", modit},
 		{"#", nope},
 		{"pchar", pcharit},
+		{"pstr", pstrit},
 		{"\0", NULL}
 	};
 
