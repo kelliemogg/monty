@@ -70,3 +70,30 @@ void pcharit(stack_tt **stack, unsigned int line_number)
 		return;
 	}
 }
+
+/**
+ * pstrit - print all
+ * decription: prints linked list backwards
+ * @stack: dbl ptr to stack
+ * @line_number: ln count for errors
+ * Return: void
+ */
+void pstrit(stack_tt **stack, unsigned int line_number)
+{
+	int i = 0;
+	stack_tt *itr;
+	(void) line_number;
+
+	if (*stack == NULL)
+		return;
+	for (itr = *stack; itr->next != NULL; itr = itr->next)
+		i++;
+	i++;
+	for (; i != 0; itr = itr->prev, i--)
+	{
+		if (itr->n == 0)
+			break;
+		putchar(itr->n);
+	}
+	putchar('\n');
+}
