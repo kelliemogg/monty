@@ -135,3 +135,36 @@ void rotlit(stack_tt **stack, unsigned int line_number)
 	head->prev = tail;
 	*stack = tail;
 }
+
+
+/**
+ * rotrit - rotates the stack to the bottom
+ * description: last element of the stack becomes the top one
+ * @stack: dbl ptr to a stack
+ * @line_number: ln count for error
+ * Return: void
+ */
+
+void rotrit(stack_tt **stack, unsigned int line_number)
+{
+	stack_tt *head, *tail, *newhead;
+
+	head = *stack;
+	if (*stack == NULL)
+		return;
+	for (tail = head; tail->next != NULL; tail = tail->next)
+		;
+	if (tail == head)
+		return;
+	if (tail->prev == head)
+	{
+		swapit(stack, line_number);
+		return;
+	}
+	newhead = head->next;
+	newhead->prev = NULL;
+	head->next = NULL;
+	head->prev = tail;
+	tail->next = head;
+	*stack = newhead;
+}
