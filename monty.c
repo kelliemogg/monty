@@ -45,6 +45,7 @@ int opcode_loop(char **argv)
 	if (!fp)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		free(first);
 		exit(EXIT_FAILURE);
 	}
 	characters = getline(&linebuff, &buffsize, fp);
