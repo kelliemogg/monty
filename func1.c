@@ -16,7 +16,11 @@ void pushit(stack_tt **stack, unsigned int line_number)
 
 	new = malloc(sizeof(stack_tt));
 	if (new == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		first->error_code = -1;
 		return;
+	}
 	if (*stack == NULL)
 	{
 		new->prev = NULL;
