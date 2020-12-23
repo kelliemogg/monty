@@ -134,22 +134,14 @@ int opcode_finder(stack_tt **stack, char *linebuff, unsigned int line_number)
 	int i;
 
 	instruction_tt arr[] = {
-		{"push", pushit},
-		{"pall", pallit},
-		{"pint", pintit},
-		{"pop", popit},
-		{"swap", swapit},
-		{"add", addit},
-		{"nop", nope},
-		{"sub", subit},
-		{"div", divit},
-		{"mul", mullet},
-		{"mod", modit},
-		{"#", nope},
-		{"pchar", pcharit},
-		{"pstr", pstrit},
-		{"rotl", rotlit},
-		{"rotr", rotrit},
+		{"push", pushit}, {"pall", pallit},
+		{"pint", pintit}, {"pop", popit},
+		{"swap", swapit}, {"add", addit},
+		{"nop", nope}, {"sub", subit},
+		{"div", divit}, {"mul", mullet},
+		{"mod", modit},	{"#", nope},
+		{"pchar", pcharit}, {"pstr", pstrit},
+		{"rotl", rotlit}, {"rotr", rotrit},
 		{"\0", NULL}
 	};
 
