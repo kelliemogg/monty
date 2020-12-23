@@ -129,6 +129,12 @@ void swapit(stack_tt **stack, unsigned int line_number)
 	int len;
 
 	itr = *stack;
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		first->error_code = -1;
+		return;
+	}
 	for (len = 1, itr = *stack; itr->next != NULL; len++, itr = itr->next)
 		;
 	if (len < 2)
